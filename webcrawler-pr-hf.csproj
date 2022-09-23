@@ -8,4 +8,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="csvhelper" Version="28.0.1" />
+    <PackageReference Include="htmlagilitypack" Version="1.11.46" />
+  </ItemGroup>
+
 </Project>

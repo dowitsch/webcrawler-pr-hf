@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "T2CHces2yUil1fZIsHIJ2g4yvzcNj5cr7opfPTelvLdWjF0sdQ3OxyPLIIk5NRTVhmkFiOL+XFu0iKY9bXbjlw==",
+  "dgSpecHash": "KneBvnF66fUejYxVdtcgfUG8rUrhswwGk3wcaU18PgySusPNLyLiPQloG+1hpyLBeGzeBo8k6qWmmzwar9a7PQ==",
   "success": true,
   "projectFilePath": "/home/dowitsch/Projects/hf/pr2/webcrawler-pr-hf/webcrawler-pr-hf.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/home/dowitsch/.nuget/packages/csvhelper/28.0.1/csvhelper.28.0.1.nupkg.sha512",
+    "/home/dowitsch/.nuget/packages/htmlagilitypack/1.11.46/htmlagilitypack.1.11.46.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -6,30 +6,59 @@
     using System.IO;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Text.RegularExpressions;
 
     class Program
     {
         static void Main(string[] args)
         {
+            var websites = new List<Website>();
+            var writer = new StreamWriter("./output/huso.csv");
+            var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            var Appartments = new List<Appartment>();
+
             HtmlWeb web = new HtmlWeb();
-            HtmlDocument doc = web.Load("https://en.wikipedia.org/wiki/Greece");
-            var HeaderNames = doc.DocumentNode.SelectNodes("//span[@class='toctext']");
-            var titles = new List<Row>();
-            foreach (var item in HeaderNames)
-            {
-            titles.Add(new Row { Title = item.InnerText});
+            websites.Add(new Website {url = "https://www.immoscout24.ch/de/immobilien/mieten/ort-bern?pt=2t&nrt=2.5&slf=100&r=5&map=1", name = "immoscout"});
+
+            foreach(var item in websites) {
+                Console.WriteLine("huso");
+                HtmlDocument doc = web.Load(item.url);
+                var possibleAppartments = doc.DocumentNode.SelectNodes("//article/a/div/div/div/div/h3");
+                foreach(var possibleAppartment in possibleAppartments) {
+                    var text = possibleAppartments.DocumentNode.InnerHtml;
+                    Console.WriteLine(text);
+                    var rent = int.Parse(Regex.Match(rentHeader.InnerHtml, @"\d+").Value);
+                    var found = new Appartment {rent = rent, squaremeters = 120, location = "fickstrasse" };
+                    Appartments.Add(found);
+                    Console.WriteLine($"{found.rent}");
+                    
+                }
             }
-            using (var writer = new StreamWriter("./output/example.csv"))
-            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            {
-            csv.WriteRecords(titles);
-            }
+
+            csv.WriteRecords(Appartments);
         }
+    }
+
+
+
+    public class Website
+    {
+        public string url {get; set;}
+        public string name {get; set;}
     }
 
 
     public class Row
     {
-        public string Title {get; set;}
+        public string title {get; set;}
     }
+
+    public class Appartment 
+    {
+        public int rent {get; set;}
+        public int squaremeters {get; set;}
+        public string location {get; set;}
+    }
+
+
 }

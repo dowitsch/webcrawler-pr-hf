@@ -139,8 +139,6 @@
         public AppartmentInformationen ExtrahiertInformationenAusHtml(HtmlNode html)
         {
             // Extrahierung von Informationen aus dem HTML-Code
-            var text = html.DocumentNode.InnerHtml;
-            Console.WriteLine(text);
             var miete = int.Parse(Regex.Match(html.InnerHtml, @"\d+").Value);
 
             return new AppartmentInformationen
@@ -150,6 +148,13 @@
                 Lage = "fickstrasse"
             };
         }
+    }
+
+    public class AppartmentInformationen
+    {
+        public int Miete { get; internal set; }
+        public int Quadratmeter { get; internal set; }
+        public string Lage { get; internal set; }
     }
 
     public class AppartmentValidator

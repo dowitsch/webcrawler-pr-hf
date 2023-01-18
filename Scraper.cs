@@ -41,6 +41,7 @@ public class WebCrawler
                 string htmlContent = fetchUrlContent(client, this.Website);
 
                 MatchCollection imgLinks = Regex.Matches(htmlContent, @"<img[^>]+src=""([^"">]+)"">");
+
                 foreach (Match match in imgLinks)
                 {
                     string filePath = match.Groups[1].Value;
@@ -56,7 +57,29 @@ public class WebCrawler
 
                 File.WriteAllText($"{this.Folder}/website.html", htmlContent);
                 Console.WriteLine($"Website {this.Website} successfully saved to multiple files.");
+                analyseAccessibilityScore(htmlContent);
             }
+    }
+
+    private void analyseAccessibilityScore(string htmlContent)
+    {
+        // match all img tags
+        string pattern1 = "<img[^>]*>";
+        Regex rgx1 = new Regex(pattern1);
+
+        // match all img tags with a alt attribute
+        string pattern2 = "<img[^>]*alt=['\"]([^'\"]*)['\"][^>]*>";
+        Regex rgx2 = new Regex(pattern2);
+        string html = "your html string";
+        MatchCollection matches1 = rgx1.Matches(htmlContent);
+        MatchCollection matches2 = rgx2.Matches(htmlContent);
+
+        int imgCount = matches1.Count;
+        int imgAltCount = matches2.Count;
+
+        double percentage = (double)imgAltCount / imgCount * 100;
+
+        Console.WriteLine($"Accessiblity Score for {this.Website}: {percentage}%");
     }
 
     private void writeContentToFile(HttpClient client, string filePath)
@@ -65,6 +88,7 @@ public class WebCrawler
         string content = fetchUrlContent(client, this.Website + filePath);
         File.WriteAllText($"{this.Folder}/{fileName}", content);
     }
+
     private string fetchUrlContent(HttpClient client, string url)
     {
         HttpResponseMessage response = client.GetAsync(url).Result;
@@ -78,8 +102,6 @@ public class WebCrawler
             Console.WriteLine($"Failed to download source: {response.StatusCode} - {url}");
             return "";
         }
-
-
     }
 
     private void createFolder() {

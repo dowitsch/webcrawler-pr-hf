@@ -70,7 +70,6 @@ public class WebCrawler
         // match all img tags with a alt attribute
         string pattern2 = "<img[^>]*alt=['\"]([^'\"]*)['\"][^>]*>";
         Regex rgx2 = new Regex(pattern2);
-        string html = "your html string";
         MatchCollection matches1 = rgx1.Matches(htmlContent);
         MatchCollection matches2 = rgx2.Matches(htmlContent);
 
